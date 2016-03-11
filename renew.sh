@@ -32,9 +32,10 @@ if [ -f "/etc/letsencrypt/live/test.bi/privkey.pem" ]; then
 echo "Creating https-site"
 cat <<EOF > /etc/apache2/sites-enabled/001-ssl.conf
 <VirtualHost *:443>
-        DocumentRoot /var/www/html
-	SSLCertificateFile /etc/letsencrypt/live/test.bi/fullchain.pem
-	SSLCertificateKeyFile /etc/letsencrypt/live/test.bi/privkey.pem
+    DocumentRoot /var/www/html
+    SSLEngine on
+    SSLCertificateFile /etc/letsencrypt/live/test.bi/fullchain.pem
+    SSLCertificateKeyFile /etc/letsencrypt/live/test.bi/privkey.pem
 $AP_DOMAINS
 </VirtualHost>
 EOF
@@ -42,7 +43,7 @@ else
 echo "Creating http-site"
 cat <<EOF > /etc/apache2/sites-enabled/001-ssl.conf
 <VirtualHost *:80>
-        DocumentRoot /var/www/html
+    DocumentRoot /var/www/html
 $AP_DOMAINS
 </VirtualHost>
 EOF
@@ -60,9 +61,10 @@ if [ -f "/etc/letsencrypt/live/test.bi/privkey.pem" ]; then
 echo "Creating https-site"
 cat <<EOF > /etc/apache2/sites-enabled/001-ssl.conf
 <VirtualHost *:443>
-        DocumentRoot /var/www/html
-        SSLCertificateFile /etc/letsencrypt/live/test.bi/fullchain.pem
-        SSLCertificateKeyFile /etc/letsencrypt/live/test.bi/privkey.pem
+    DocumentRoot /var/www/html
+    SSLEngine on
+    SSLCertificateFile /etc/letsencrypt/live/test.bi/fullchain.pem
+    SSLCertificateKeyFile /etc/letsencrypt/live/test.bi/privkey.pem
 $AP_DOMAINS
 </VirtualHost>
 EOF
@@ -84,7 +86,7 @@ ENDDATE="${ENDDATE/notAfter=/}"
 
 cat <<EOF > README.MD
 test.bi
-=====
+=======
 **test.bi** is a reserved domain for your projects.  
 It comes with a SSL-Certificate that you can use in your environment.
 
@@ -101,8 +103,54 @@ Security note
 ----------------
 > Since the **private key is public**, and anyone could possibly read your communication, make sure you **do not use the certificate in production or with sensitive data**.
 
+Usage
+-----
+    $ git clone https://github.com/Eun/test.bi.git /etc/test.bi
+    
+**Apache**
+
+    # Enable ssl 
+    $ a2enmod ssl
+    
+    # Add to your sites-enabled/000-default.conf
+    <VirtualHost *:443>
+        DocumentRoot /var/www/html
+        SSLEngine on
+        SSLCertificateFile /etc/test.bi/fullchain.pem
+        SSLCertificateKeyFile /etc/test.bi/privkey.pem
+    </VirtualHost>
+------   
+**Nginx**
+
+    # Add to your sites-enabled/default
+    server
+    {
+        listen 443 ssl;
+        ssl_certificate /etc/test.bi/fullchain.pem;
+        ssl_certificate_key /etc/test.bi/privkey.pem;
+        root /var/www/html;
+    }
+------    
+**Lighttpd**  
+
+    # Enable ssl
+    $ lighttpd-enable-mod ssl
+
+    # Add to your conf-enabled/10-ssl.conf
+    $SERVER["socket"] == ":443" {
+        ssl.engine    = "enable"
+        ssl.pemfile   = "/etc/test.bi/fullchain_privkey.pem"
+    }
+------    
+**HAProxy**
+
+    frontend www-https
+        bind :443 ssl crt /etc/test.bi/fullchain_privkey.pem
+        default_backend www-backend
+
+
 Hosts included
------------------
+--------------
 $FU_DOMAINS
 EOF
 
