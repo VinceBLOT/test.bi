@@ -108,4 +108,4 @@ EOF
 
 git add .
 git commit --allow-empty-message --message ""
-#git push origin master
+git push -u origin master
