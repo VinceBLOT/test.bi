@@ -88,7 +88,7 @@ test.bi
 **test.bi** is a reserved domain for your projects.  
 It comes with a SSL-Certificate that you can use in your environment.
 
-> Current certificate is valid until $ENDDATE  
+> Current certificate is valid until **$ENDDATE**  
 > Certificate will be updated every 7 days.  
 
 **Usefull cases**  
