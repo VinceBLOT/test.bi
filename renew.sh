@@ -85,7 +85,7 @@ ENDDATE=$(openssl x509 -enddate -noout -in cert.pem)
 ENDDATE="${ENDDATE/notAfter=/}"
 
 cat <<EOF > README.MD
-test.bi
+test.bi :bee:
 =======
 **test.bi** is a reserved domain for your projects.  
 It comes with a SSL-Certificate that you can use in your environment.
