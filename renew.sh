@@ -80,7 +80,7 @@ cat certs/fullchain.pem certs/privkey.pem > certs/fullchain_privkey.pem
 cd certs
 git config user.name test.bi
 git config user.email daemon@test.bi
-
+openssl pkcs12 -export -in fullchain.pem -inkey privkey.pem -out fullchain.pfx  -passout pass:
 ENDDATE=$(openssl x509 -enddate -noout -in cert.pem)
 ENDDATE="${ENDDATE/notAfter=/}"
 
