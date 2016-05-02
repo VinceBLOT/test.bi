@@ -3,7 +3,7 @@ test.bi :bee:
 **test.bi** is a reserved domain for your projects.  
 It comes with a SSL-Certificate that you can use in your environment.
 
-> Current certificate is valid until **Jul 24 02:02:00 2016 GMT**  
+> Current certificate is valid until **Jul 31 02:02:00 2016 GMT**  
 > Certificate will be updated every 7 days.  
 
 **Usefull cases**  
