@@ -3,9 +3,9 @@
 # git clone https://github.com/letsencrypt/letsencrypt.git /root/letsencrypt
 # git clone https://github.com/Eun/test.bi.git --branch daemon /etc/test.bi
 # useradd le -d /etc/test.bi -s /bin/bash
-# touch /etc/apache2/sites-enabled/001-ssl.conf
-# chmod 0664 /etc/apache2/sites-enabled/001-ssl.conf
-# chown -hR root:le /etc/apache2/sites-enabled/001-ssl.conf
+# touch /etc/apache2/sites-enabled/test.bi.conf
+# chmod 0664 /etc/apache2/sites-enabled/test.bi.conf
+# chown -hR root:le /etc/apache2/sites-enabled/test.bi.conf
 # chown -hR le:le /etc/test.bi/
 # mkdir -p /etc/letsencrypt/live/
 # mkdir -p /etc/letsencrypt/archive/
@@ -21,47 +21,50 @@ LE_DOMAINS='-d test.bi'
 AP_DOMAINS='ServerName test.bi'
 FU_DOMAINS='    test.bi'
 while read -r line || [[ -n "$line" ]]; do
-	LE_DOMAINS="$LE_DOMAINS -d $line.test.bi"
-	AP_DOMAINS="$AP_DOMAINS"$'\n'"ServerAlias $line.test.bi"
-	FU_DOMAINS="$FU_DOMAINS"$'\n'"    $line.test.bi"
+        LE_DOMAINS="$LE_DOMAINS -d $line.test.bi"
+        AP_DOMAINS="$AP_DOMAINS"$'\n'"ServerAlias $line.test.bi"
+        FU_DOMAINS="$FU_DOMAINS"$'\n'"    $line.test.bi"
 done < "hosts.txt"
 
 
+echo "Clearing config"
+echo > /etc/apache2/sites-enabled/test.bi.conf
 
 if [ -f "/etc/letsencrypt/live/test.bi/privkey.pem" ]; then
 echo "Creating https-site"
-cat <<EOF > /etc/apache2/sites-enabled/001-ssl.conf
+cat <<EOF >> /etc/apache2/sites-enabled/test.bi.conf
 <VirtualHost *:443>
-    DocumentRoot /var/www/html
+    DocumentRoot /var/www/html/test.bi
     SSLEngine on
     SSLCertificateFile /etc/letsencrypt/live/test.bi/fullchain.pem
     SSLCertificateKeyFile /etc/letsencrypt/live/test.bi/privkey.pem
 $AP_DOMAINS
 </VirtualHost>
 EOF
-else
+fi
+
 echo "Creating http-site"
-cat <<EOF > /etc/apache2/sites-enabled/001-ssl.conf
+cat <<EOF >> /etc/apache2/sites-enabled/test.bi.conf
 <VirtualHost *:80>
-    DocumentRoot /var/www/html
+    DocumentRoot /var/www/html/test.bi
 $AP_DOMAINS
 </VirtualHost>
 EOF
-fi
 
 sudo /etc/init.d/apache2 restart
-sudo /root/letsencrypt/letsencrypt-auto certonly --webroot -w /var/www/html/ --email root@test.bi --agree-tos --rsa-key-size 4096 --force-renewal $LE_DOMAINS
+sudo /root/letsencrypt/letsencrypt-auto certonly --webroot -w /var/www/html/test.bi/ --email root@test.bi --agree-tos --rsa-key-size 4096 --force-renewal $LE_DOMAINS
 
 if [ $? -ne 0 ]; then
-	echo "Error"
-	exit
+        echo "Error"
+        exit
 fi
+
 
 if [ -f "/etc/letsencrypt/live/test.bi/privkey.pem" ]; then
 echo "Creating https-site"
-cat <<EOF > /etc/apache2/sites-enabled/001-ssl.conf
+cat <<EOF >> /etc/apache2/sites-enabled/test.bi.conf
 <VirtualHost *:443>
-    DocumentRoot /var/www/html
+    DocumentRoot /var/www/html/test.bi
     SSLEngine on
     SSLCertificateFile /etc/letsencrypt/live/test.bi/fullchain.pem
     SSLCertificateKeyFile /etc/letsencrypt/live/test.bi/privkey.pem
@@ -69,11 +72,20 @@ $AP_DOMAINS
 </VirtualHost>
 EOF
 fi
+
+echo "Creating http-site"
+cat <<EOF >> /etc/apache2/sites-enabled/test.bi.conf
+<VirtualHost *:80>
+    DocumentRoot /var/www/html/test.bi
+$AP_DOMAINS
+</VirtualHost>
+EOF
+
 
 sudo /etc/init.d/apache2 restart
 
 if [ ! -d "certs" ]; then
-	git clone https://github.com/Eun/test.bi.git certs
+        git clone https://github.com/Eun/test.bi.git certs
 fi
 cp /etc/letsencrypt/live/test.bi/* certs/
 cat certs/fullchain.pem certs/privkey.pem > certs/fullchain_privkey.pem
@@ -87,17 +99,17 @@ ENDDATE="${ENDDATE/notAfter=/}"
 cat <<EOF > README.MD
 test.bi :bee:
 =======
-**test.bi** is a reserved domain for your projects.  
+**test.bi** is a reserved domain for your projects.
 It comes with a SSL-Certificate that you can use in your environment.
 
-> Current certificate is valid until **$ENDDATE**  
-> Certificate will be updated every 7 days.  
+> Current certificate is valid until **$ENDDATE**
+> Certificate will be updated every 7 days.
 
-**Usefull cases**  
-1. You need a development hostname.  
-2. You are developing an application that needs HTTPS, or other SSL connection to your server.  
-3. You are developing a [ServiceWorker](https://www.w3.org/TR/service-workers/).  
-4. many more 
+**Usefull cases**
+1. You need a development hostname.
+2. You are developing an application that needs HTTPS, or other SSL connection to your server.
+3. You are developing a [ServiceWorker](https://www.w3.org/TR/service-workers/).
+4. many more
 
 Security note
 ----------------
@@ -106,12 +118,12 @@ Security note
 Usage
 -----
     $ git clone https://github.com/Eun/test.bi.git /etc/test.bi
-    
+
 **Apache**
 
-    # Enable ssl 
+    # Enable ssl
     $ a2enmod ssl
-    
+
     # Add to your sites-enabled/000-default.conf
     <VirtualHost *:443>
         DocumentRoot /var/www/html
@@ -119,7 +131,7 @@ Usage
         SSLCertificateFile /etc/test.bi/fullchain.pem
         SSLCertificateKeyFile /etc/test.bi/privkey.pem
     </VirtualHost>
-------   
+------
 **Nginx**
 
     # Add to your sites-enabled/default
@@ -130,8 +142,8 @@ Usage
         ssl_certificate_key /etc/test.bi/privkey.pem;
         root /var/www/html;
     }
-------    
-**Lighttpd**  
+------
+**Lighttpd**
 
     # Enable ssl
     $ lighttpd-enable-mod ssl
@@ -141,7 +153,7 @@ Usage
         ssl.engine    = "enable"
         ssl.pemfile   = "/etc/test.bi/fullchain_privkey.pem"
     }
-------    
+------
 **HAProxy**
 
     frontend www-https
