@@ -149,7 +149,7 @@ Usage
     $ lighttpd-enable-mod ssl
 
     # Add to your conf-enabled/10-ssl.conf
-    $SERVER["socket"] == ":443" {
+    \$SERVER["socket"] == ":443" {
         ssl.engine    = "enable"
         ssl.pemfile   = "/etc/test.bi/fullchain_privkey.pem"
     }
