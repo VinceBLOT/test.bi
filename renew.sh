@@ -92,7 +92,7 @@ cat /etc/letsencrypt/live/test.bi/fullchain.pem /etc/letsencrypt/live/test.bi/pr
 openssl pkcs12 -export -in /etc/letsencrypt/live/test.bi/fullchain.pem -inkey /etc/letsencrypt/live/test.bi/privkey.pem -out certs/fullchain.pfx  -passout pass:
 ENDDATE=$(openssl x509 -enddate -noout -in /etc/letsencrypt/live/test.bi/cert.pem)
 ENDDATE="${ENDDATE/notAfter=/}"
-eval "echo \"$(cat README4096.tpl.md)\"" > certs/README.md
+eval "echo \"$(cat README4096.md.tpl)\"" > certs/README.md
 
 ##
 if [ -f "/etc/letsencrypt/live/test.bi/privkey.pem" ]; then
