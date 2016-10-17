@@ -1,6 +1,6 @@
-$RSA_BIT :bee:
+$RSA_SIZE :bee:
 =======
-Special version using $RSA_BIT
+Special version using $RSA_SIZE
 
 > Current certificate is valid until **$ENDDATE**.
 > Certificate will be updated every 7 days.
