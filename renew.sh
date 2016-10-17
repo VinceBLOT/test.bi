@@ -126,3 +126,4 @@ git config user.email daemon@test.bi
 git add .
 git commit --allow-empty-message --message ""
 git push -u origin master
+
