@@ -61,7 +61,7 @@ sudo /etc/init.d/apache2 restart
 for RSA_SIZE in ${RSA_SIZES[*]}
 do
 	echo "Creating $RSA_SIZE cert"
-	sudo /root/letsencrypt/letsencrypt-auto certonly --webroot -w /var/www/html/test.bi/ --email root@test.bi --agree-tos --rsa-key-size $RSA_SIZE --force-renewal $LE_DOMAINS
+	sudo /root/letsencrypt/letsencrypt-auto certonly --text --webroot -w /var/www/html/test.bi/ --email root@test.bi --agree-tos --rsa-key-size $RSA_SIZE --force-renewal $LE_DOMAINS
 
 	if [ $? -ne 0 ]; then
         	echo "Error"
@@ -82,7 +82,7 @@ done
 
 # create 4096 cert
 echo "Creating 4096 cert"
-sudo /root/letsencrypt/letsencrypt-auto certonly --webroot -w /var/www/html/test.bi/ --email root@test.bi --agree-tos --rsa-key-size 4096 --force-renewal $LE_DOMAINS
+sudo /root/letsencrypt/letsencrypt-auto certonly --text --webroot -w /var/www/html/test.bi/ --email root@test.bi --agree-tos --rsa-key-size 4096 --force-renewal $LE_DOMAINS
 if [ $? -ne 0 ]; then
        	echo "Error"
         exit
