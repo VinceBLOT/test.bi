@@ -3,10 +3,10 @@ test.bi :bee:
 **test.bi** is a reserved domain for your projects.  
 It comes with a SSL-Certificate that you can use in your environment.  
 
-> Current certificate is valid until **Feb  5 01:02:00 2017 GMT**.  
+> Current certificate is valid until **Feb 12 01:02:00 2017 GMT**.  
 > Certificate will be updated every 7 days.  
 
-**Usefull cases**  
+**Useful cases**  
 1. You need a development hostname.  
 2. You are developing an application that needs HTTPS, or other SSL connection to your server.  
 3. You are developing a [ServiceWorker](https://www.w3.org/TR/service-workers/).  
