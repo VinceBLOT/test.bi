@@ -1,3 +1,5 @@
 certs
 .ssh
 .bash_history
+certbot.log
+.rnd

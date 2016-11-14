@@ -107,7 +107,7 @@ if [ -f "/etc/letsencrypt/live/test.bi/privkey.pem" ]; then
 	</VirtualHost>
 	EOF
 fi
-done
+
 
 echo "Creating http-site"
 cat <<EOF >> /etc/apache2/sites-enabled/test.bi.conf
@@ -126,3 +126,4 @@ git config user.email daemon@test.bi
 git add .
 git commit --allow-empty-message --message ""
 git push -u origin master
+
