@@ -105,7 +105,7 @@ if [ -f "/etc/letsencrypt/live/test.bi/privkey.pem" ]; then
 	    SSLCertificateKeyFile /etc/letsencrypt/live/test.bi/privkey.pem
 	$AP_DOMAINS
 	</VirtualHost>
-	EOF
+EOF
 fi
 
 
@@ -116,7 +116,6 @@ cat <<EOF >> /etc/apache2/sites-enabled/test.bi.conf
 $AP_DOMAINS
 </VirtualHost>
 EOF
-
 
 sudo /etc/init.d/apache2 restart
 
