@@ -2,7 +2,7 @@
 =======
 Special version using 2048
 
-> Current certificate is valid until **Jun 18 01:02:00 2017 GMT**.
+> Current certificate is valid until **Jun 25 00:02:00 2017 GMT**.
 > Certificate will be updated every 7 days.
 
 Hosts included
