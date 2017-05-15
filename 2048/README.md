@@ -1,8 +1,8 @@
 2048 :bee:
 =======
-Special version using 2048
+Special version using 2048 bits
 
-> Current certificate is valid until **Aug  6 00:01:00 2017 GMT**.
+> Current certificate is valid until **Aug 13 00:01:00 2017 GMT**.  
 > Certificate will be updated every 7 days.
 
 Hosts included
