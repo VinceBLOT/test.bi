@@ -35,6 +35,7 @@ z
 8
 9
 abc
+auth
 bar
 cloud
 dns
@@ -49,7 +50,9 @@ net
 pop
 pop3
 root
+service
 smtp
+storage
 test
 web
 who
