@@ -2,7 +2,7 @@
 =======
 Special version using 2048 bits
 
-> Current certificate is valid until **Aug 13 00:01:00 2017 GMT**.  
+> Current certificate is valid until **Oct  8 00:02:00 2017 GMT**.  
 > Certificate will be updated every 7 days.
 
 Hosts included
@@ -45,6 +45,7 @@ Hosts included
     8.test.bi
     9.test.bi
     abc.test.bi
+    auth.test.bi
     bar.test.bi
     cloud.test.bi
     dns.test.bi
@@ -59,7 +60,9 @@ Hosts included
     pop.test.bi
     pop3.test.bi
     root.test.bi
+    service.test.bi
     smtp.test.bi
+    storage.test.bi
     test.test.bi
     web.test.bi
     who.test.bi
